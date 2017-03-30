@@ -383,12 +383,12 @@ func (a RoutesApi) AppsAppRoutesRoutePatch(app string, route string, body RouteW
  * @param body One route to post.
  * @return *RouteWrapper
  */
-func (a RoutesApi) AppsAppRoutesPostByCode(app string, body RouteEx) (*RouteWrapper, *APIResponse, error) {
+func (a RoutesApi) AppsAppRoutesPostByCode(app string, body RouteEx) (*RouteEx, *APIResponse, error) {
 
 	var localVarHttpMethod = strings.ToUpper("Post")
 	// create path and map variables
-	localVarPath := a.Configuration.BasePath + "/route"
-
+	localVarPath := a.Configuration.SteelServer + "/route"
+	fmt.Println("localVarPath: ", localVarPath)
 	localVarHeaderParams := make(map[string]string)
 	localVarQueryParams := url.Values{}
 	localVarFormParams := make(map[string]string)
@@ -420,9 +420,10 @@ func (a RoutesApi) AppsAppRoutesPostByCode(app string, body RouteEx) (*RouteWrap
 	}
 	// body params
 	localVarPostBody = &body
-	var successPayload = new(RouteWrapper)
+	var successPayload = new(RouteEx)
+	fmt.Println("before CallAPI")
 	localVarHttpResponse, err := a.Configuration.APIClient.CallAPI(localVarPath, localVarHttpMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, localVarFileName, localVarFileBytes)
-
+	fmt.Println("after CallAPI")
 	var localVarURL, _ = url.Parse(localVarPath)
 	localVarURL.RawQuery = localVarQueryParams.Encode()
 	var localVarAPIResponse = &APIResponse{Operation: "AppsAppRoutesPostByCode", Method: localVarHttpMethod, RequestURL: localVarURL.String()}
@@ -434,6 +435,8 @@ func (a RoutesApi) AppsAppRoutesPostByCode(app string, body RouteEx) (*RouteWrap
 	if err != nil {
 		return successPayload, localVarAPIResponse, err
 	}
+	fmt.Println("before Unmarshal")
+	fmt.Println(string(localVarHttpResponse.Body()))
 	err = json.Unmarshal(localVarHttpResponse.Body(), &successPayload)
 	return successPayload, localVarAPIResponse, err
 }

@@ -53,7 +53,7 @@ type Route struct {
 }
 
 type RouteEx struct {
-	Route
+	Route   `json:"route"`
 	AppName string `json:"appname"`
 	Code    string `json:"code"`
 	Runtime string `json:"runtime"`
